@@ -1,0 +1,27 @@
+﻿@model IEnumerable<System.IO.FileInfo>
+
+@{
+    Layout = null;
+}
+
+
+<table class="table">
+    <tr>
+        <th>
+            Файл
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Name, "Dowload", new { Name = item.Name })
+            </td>
+            <td class="control-buttons">
+                @Html.ActionLink("Удалить", "Delete", new { Name = item.Name })
+            </td>
+        </tr>
+    }
+</table>
+

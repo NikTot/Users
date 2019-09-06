@@ -1,0 +1,47 @@
+﻿@model IEnumerable<SAU.DTO.UserDTO>
+
+@{
+    Layout = null;
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Login)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Login)
+        </td>
+        <td>
+            @switch (item.IsActive)
+            {
+                case true:<text>Да</text>
+                break;
+                case false: <text>Нет</text>
+                break;
+            }
+        </td>
+        <td class="control-buttons">
+            <button class="btn btn-default modal-button" data-url='@Url.Action("Edit", new {id = item.Id})'>Редактировать</button>
+            <button class="btn btn-default modal-button" data-url='@Url.Action("Systems", new {id = item.Id})'>Системы</button>
+            <button class="btn btn-default modal-button" data-url='@Url.Action("Delete", new {id = item.Id})'>Скрыть</button>
+        </td>
+    </tr>
+    }
+</table>
+

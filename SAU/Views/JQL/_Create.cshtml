@@ -1,0 +1,43 @@
+﻿@model SAU.DTO.JQLFilterDTO
+
+
+<div class="modal-body">
+
+    @using (Ajax.BeginForm("Create", "JQL",
+        new AjaxOptions() { HttpMethod = "POST", OnSuccess = "$('#modalDialog').modal('hide')" },
+        new { id = "validatedFormId" }))
+    {
+        @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <p class="h4 text-center py-4">Создание JQL фильтра</p>        
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SystemId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.SystemId, ViewBag.Systems as SelectList)
+                @Html.ValidationMessageFor(model => model.SystemId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.JqlString, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.JqlString, new { @class = "form-control", rows = "10" })
+                @Html.ValidationMessageFor(model => model.JqlString, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @Html.HiddenFor(model => model.Hidden)
+
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-10">
+                <input type="submit" value="Создать" class="btn btn-primary" />
+                <input type="reset" value="Отмена" class="btn btn-default" data-dismiss="modal" />
+            </div>
+        </div>
+    </div>
+    }
+</div>
+

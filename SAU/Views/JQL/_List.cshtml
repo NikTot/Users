@@ -1,0 +1,37 @@
+﻿@model IList<SAU.DTO.JQLFilterDTO>
+
+@{
+    Layout = null;
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("Имя системы")
+        </th>
+        <th>
+            @Html.Label("JQL фильтр")
+        </th>
+        <th>  
+            <button class="btn btn-default modal-button" data-url='@Url.Action("Do")'>Сформировать файл по всем системам</button>
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.System.Name, ViewBag.Systems as SelectList)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JqlString)
+            </td>
+            <td class="control-buttons">
+                <button class="btn btn-default modal-button" data-url='@Url.Action("Edit", new { id = item.Id })'>Редактировать</button>
+                <button class="btn btn-default modal-button" data-url='@Url.Action("Delete", new { id = item.Id })'>Скрыть</button>
+                <button class="btn btn-default modal-button" data-url='@Url.Action("DoId", new { id = item.Id })'>Сформировать файл</button>                
+            </td>
+        </tr>
+    }
+</table>
+

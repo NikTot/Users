@@ -1,0 +1,56 @@
+﻿@model SAU.DTO.SystemDTO
+
+<div class="modal-body">
+
+    @using (Ajax.BeginForm("Users", "System",
+        new AjaxOptions() { HttpMethod = "POST", OnSuccess = "$('#modalDialog').modal('hide')" },
+        new { id = "validatedFormId" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal" style="text-align:left">
+            <h4>Пользователя которые входят в эту систему</h4>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.Label("Пользователь системы")
+                    </th>
+                    <th>
+                        @Html.Label("Имя пользователя")
+                    </th>
+                </tr>
+
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.Name)
+                @Html.HiddenFor(model => model.IsActive)
+
+                @if (Model.Users != null)
+                {
+                    for (var i = 0; i < Model.Users.Count(); i++)
+                    {
+                        @Html.HiddenFor(model => model.Users[i].Id)
+                        <tr>
+                            <td>
+                                @Html.CheckBoxFor(model => model.Users[i].IsSelected, new { @class = "check" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Users[i].Name)
+                                @Html.HiddenFor(model => model.Users[i].Name)
+                            </td>
+                        </tr>
+                        @Html.HiddenFor(model => model.Users[i].IsActive)
+                        @Html.HiddenFor(model => model.Users[i].IsDeleted)
+                        @Html.HiddenFor(model => model.Users[i].Login)
+                    }
+                }
+            </table>
+
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-10">
+                    <input type="submit" value="Сохранить" class="btn btn-primary" />
+                    <input type="reset" value="Отменить" class="btn btn-default" data-dismiss="modal" />
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

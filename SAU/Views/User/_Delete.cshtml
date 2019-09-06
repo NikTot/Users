@@ -1,0 +1,34 @@
+﻿@model SAU.DTO.UserDTO
+
+<div class="modal-body">
+
+    @using (Ajax.BeginForm("Delete", "User",
+        new AjaxOptions() { HttpMethod = "POST", OnSuccess = "$('#modalDialog').modal('hide')" },
+        new { id = "validatedFormId" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            <p class="h4 text-center py-4">Вы точно хотите скрыть пользователя?</p>
+            <hr />
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.Name)
+            @Html.HiddenFor(model => model.Login)
+            @Html.HiddenFor(model => model.IsActive)
+            @Html.HiddenFor(model => model.IsDeleted)
+
+            <div class="form-group">
+                <div class="col-md-offset-7 col-md-10">
+                    <input type="submit" value="Скрыть" class="btn btn-primary" />
+                    <input type="reset" value="Отмена" class="btn btn-default" data-dismiss="modal" />
+                </div>
+            </div>
+        </div>
+    }
+</div>

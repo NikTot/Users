@@ -1,0 +1,56 @@
+﻿@model SAU.DTO.UserDTO
+
+<div class="modal-body">
+
+    @using (Ajax.BeginForm("Systems", "User",
+        new AjaxOptions() { HttpMethod = "POST", OnSuccess = "$('#modalDialog').modal('hide')" },
+        new { id = "validatedFormId" }))
+    {
+        @Html.AntiForgeryToken()
+    <div class="form-horizontal" style="text-align:left">
+        <h4>Системы пользователя</h4>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.Label("Вхождение в систему")
+                </th>
+                <th>
+                    @Html.Label("Имя системы")
+                </th>
+            </tr>
+
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.Name)
+            @Html.HiddenFor(model => model.Login)
+            @Html.HiddenFor(model => model.IsActive)
+            @Html.HiddenFor(model => model.IsDeleted)
+
+            @if (Model.Systems != null)
+            {
+                for (var i = 0; i < Model.Systems.Count(); i++)
+                {
+                    @Html.HiddenFor(model => model.Systems[i].Id)
+                    <tr>
+                        <td>
+                            @Html.CheckBoxFor(model => model.Systems[i].IsSelected, new { @class = "check" })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Systems[i].Name)
+                            @Html.HiddenFor(model => model.Systems[i].Name)
+                        </td>
+                    </tr>
+                    @Html.HiddenFor(model => model.Systems[i].IsActive)
+                }
+            }
+        </table>
+
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-10">
+                    <input type="submit" value="Сохранить" class="btn btn-primary" />
+                    <input type="reset" value="Отменить" class="btn btn-default" data-dismiss="modal" />
+                </div>
+            </div>
+    </div>
+    }
+
+</div>
